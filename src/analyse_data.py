@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 
-def analysis_delivery_time_vs_rating(df):
+def analysis_delivery_time_vs_rating(df, st):
 
     print(df.describe())
 
@@ -65,6 +65,8 @@ def analysis_delivery_time_vs_rating(df):
     plt.savefig('avg_rating_by_time_linear_regression.png', dpi=300, bbox_inches='tight')
     plt.show()
 
+    st.pyplot(plt)
+
     poly = PolynomialFeatures(degree=2)
     X_poly = poly.fit_transform(delivery_time.reshape(-1, 1))
 
@@ -83,6 +85,8 @@ def analysis_delivery_time_vs_rating(df):
              fontsize=8, bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.3'))
     plt.savefig('avg_rating_by_time_polynomial_regression.png', dpi=300, bbox_inches='tight')
     plt.show()
+
+    st.pyplot(plt)
 
     X = X_poly
     y = ratings
@@ -109,8 +113,10 @@ def analysis_delivery_time_vs_rating(df):
     print(f"Mean Squared Error: {mse:.3f}")
     print(f"Root Mean Squared Error: {rmse:.3f}")
 
+    return plt
 
-def analysis_clustering(df):
+
+def analysis_clustering(df, st):
     # df = df1.merge(df2, on='ID', how='outer').merge(df3, on='ID', how='outer')
     # df = df[1:]
     # df.head(2)
@@ -146,6 +152,8 @@ def analysis_clustering(df):
     plt.savefig('lat_long_plot.png', dpi=300, bbox_inches='tight')
     plt.show()
 
+    st.pyplot(plt)
+
     X = df
     # y = df['Restaurant_longitude']
 
@@ -160,6 +168,8 @@ def analysis_clustering(df):
              fontsize=10, bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.3'))
     plt.savefig('delivery_location_lat_long.png', dpi=300, bbox_inches='tight')
     plt.show()
+
+    st.pyplot(plt)
 
     # Determine the optimal number of clusters using the Elbow Method
     inertia = []
@@ -183,6 +193,8 @@ def analysis_clustering(df):
     plt.savefig('elbow_graph.png', dpi=300, bbox_inches='tight')
     plt.show()
 
+    st.pyplot(plt)
+
     k = 4  # Optimal k from the elbow method
     kmeans = KMeans(n_clusters=k)
     data['Cluster'] = kmeans.fit_predict(data)
@@ -202,3 +214,7 @@ def analysis_clustering(df):
              fontsize=10, bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.3'))
     plt.savefig('clustering.png', dpi=300, bbox_inches='tight')
     plt.show()
+
+    st.pyplot(plt)
+
+    return plt

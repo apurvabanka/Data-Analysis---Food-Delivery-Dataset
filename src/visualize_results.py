@@ -4,20 +4,20 @@ import pandas as pd
 
 from utils import extract_time_taken
 
-def vistualization(df):
+def vistualization(df, st):
 
-    plot = time_taken_vs_rating_visualization(df)
+    plot = time_taken_vs_rating_visualization(df, st)
 
-    day_part_visualization(df)
+    day_part_visualization(df, st)
 
-    distribution_of_delivery_visualisation(df)
+    distribution_of_delivery_visualisation(df, st)
 
-    vehicle_type_visualisation(df)
+    vehicle_type_visualisation(df, st)
 
     return plot
 
 
-def time_taken_vs_rating_visualization(df):
+def time_taken_vs_rating_visualization(df, st):
     time_taken = df['Time_taken(min)'].str.split(" ").str[1]
 
     time_taken = pd.DataFrame(time_taken)
@@ -69,11 +69,12 @@ def time_taken_vs_rating_visualization(df):
     plt.savefig('time_taken_vs_rating_visualization.png', dpi=300, bbox_inches='tight')
     plt.show()
 
+    st.pyplot(plt)
 
     return plt
 
 
-def day_part_visualization(df):
+def day_part_visualization(df, st):
     df["order_time"] = df["Order_Date"].astype(str) + " " + df["Time_Orderd"].astype(str)
     df["order_pickup_time"] = df["Order_Date"].astype(str) + " " + df["Time_Order_picked"].astype(str)
 
@@ -170,6 +171,8 @@ def day_part_visualization(df):
 
     plt.savefig('day_part_visualization.png', dpi=300, bbox_inches='tight')
     plt.show()
+
+    st.pyplot(plt)
     
 
 
@@ -196,6 +199,8 @@ def day_part_visualization(df):
 
     plt.savefig('heat_map_avg_delivery_time.png', dpi=300, bbox_inches='tight')
     plt.show()
+
+    st.pyplot(plt)
 
 
     avg_delivery_time_by_hour = df.groupby('Order_hour')['time_taken_min'].mean().reset_index()
@@ -236,7 +241,9 @@ def day_part_visualization(df):
     plt.savefig('avg_delivery_time_by_hour.png', dpi=300, bbox_inches='tight')
     plt.show()
 
-def delivery_time_distribution(delivery_time):
+    st.pyplot(plt)
+
+def delivery_time_distribution(delivery_time, st):
     plt.figure(figsize=(12, 6))
 
     # Histogram
@@ -262,15 +269,17 @@ def delivery_time_distribution(delivery_time):
 
     plt.tight_layout()
     plt.savefig('delivery_time_box_plot.png', dpi=300, bbox_inches='tight')
-    plt.show()
+    
+    st.pyplot(plt)
 
-def distribution_of_delivery_visualisation(df):
+
+def distribution_of_delivery_visualisation(df, st):
     df['time_taken_min'] = df["Time_taken(min)"].apply(lambda x: extract_time_taken(x) if isinstance(x, str) else [])
     df_exploded = df.explode('time_taken_min')
 
-    delivery_time_distribution(df_exploded["time_taken_min"])
+    delivery_time_distribution(df_exploded["time_taken_min"], st)
 
-def vehicle_type_visualisation(df):
+def vehicle_type_visualisation(df, st):
     df['multiple_deliveries'] = pd.to_numeric(df['multiple_deliveries'], errors='coerce')
 
     # Drop rows with NaN values in 'multiple_deliveries' column
@@ -296,6 +305,8 @@ def vehicle_type_visualisation(df):
     plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     plt.savefig('avg_multiple_delivery_by_vehicle.png', dpi=300, bbox_inches='tight')
     plt.show()
+
+    st.pyplot(plt)
 
     # Ensure the required columns are present and filter out rows with missing values
     if 'City' in df.columns and 'Delivery_person_Ratings' in df.columns:
@@ -328,6 +339,8 @@ def vehicle_type_visualisation(df):
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust layout to fit the suptitle and insight text
         plt.savefig('customer_rating_by_location.png', dpi=300, bbox_inches='tight')
         plt.show()
+
+        st.pyplot(plt)
 
     else:
         print("The required columns 'City' and 'Delivery_person_Ratings' are not present in the dataset.")

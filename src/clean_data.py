@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def data_clean(df):
+def data_clean(df, progress_bar):
 
     print(df.info())
 
@@ -13,12 +13,16 @@ def data_clean(df):
 
     null_value_removed = removing_null_values(df)
 
+    progress_bar.progress(30)
+
     print("################################################")
     print("Cleaning Latitude and Longitude")
     print("################################################")
 
 
     lat_long_clean = cleaning_lat_long(null_value_removed)
+
+    progress_bar.progress(60)
 
     print("################################################")
     print("Cleaning Data Types")
@@ -27,6 +31,7 @@ def data_clean(df):
 
     datatype_clean = cleaning_datatypes(lat_long_clean)
 
+    progress_bar.progress(100)
 
     return datatype_clean
 

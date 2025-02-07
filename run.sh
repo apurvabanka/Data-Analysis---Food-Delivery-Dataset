@@ -1,3 +1,3 @@
 source env/bin/activate
 cd src
-python main.py
+streamlit run app.py
