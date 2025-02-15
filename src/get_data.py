@@ -5,6 +5,11 @@ from bs4 import BeautifulSoup
 from utils import load_selenium
 
 
+def load_csv():
+    df = pd.read_csv("train.csv")
+    return df
+
+
 def load_website(progress_bar, status_text):
     df_list = []
     url_list = [
