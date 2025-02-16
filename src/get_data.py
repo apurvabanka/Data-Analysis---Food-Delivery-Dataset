@@ -6,7 +6,7 @@ from utils import load_selenium
 
 
 def load_csv():
-    df = pd.read_csv("train.csv")
+    df = pd.read_csv("https://raw.githubusercontent.com/apurvabanka/Data-Analysis---Food-Delivery-Dataset/refs/heads/main/src/train.csv")
     return df
 
 
