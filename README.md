@@ -2,7 +2,7 @@
 
 ## Website Link
 
-[https://data-analysis-food-delivery-dataset.streamlit.app/](https://data-analysis-food-delivery-dataset.streamlit.app/)
+[https://data-analysis-food-delivery-dataset.streamlit.app/](https://data-analysis-food-delivery-dataset.onrender.com/)
 
 ## To run the application, run the below commands.
 
